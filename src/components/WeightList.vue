@@ -1,34 +1,117 @@
 <template>
-  <div class="weight-list">
-    <div class="font-info">
-      <span class="font-info__name">Karla</span>
-      <span class="font-info__styles">8 Styles</span>
-      <ul class="font-weights">
-        <li class="l">Light</li>
-        <li class="l i">Light Italic</li>
-        <li class="r">Regular</li>
-        <li class="r i">Regular Italic</li>
-        <li class="b">Bold</li>
-        <li class="b i">Bold Italic</li>
-        <li class="b">Heavy</li>
-        <li class="b i">Heavy Italic</li>
-      </ul>
+  <transition name="weights">
+    <div class="weight-list" v-show="active">
+      <div class="font-info">
+        <span class="font-info__name">Karla</span>
+        <span class="font-info__styles">8 Styles</span>
+        <ul class="font-weights">
+          <li v-for="weight in this.weights" v-bind:class="{
+            i: weight.italic,
+            l: weight.light,
+            b: weight.bold,
+            r: (!weight.italic && !weight.bold)
+          }">{{ weight.type }}</li>
+        </ul>
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
 export default {
   name: 'weightList',
+  props: ['active'],
   data () {
     return {
-      show: false
+      weights: [
+        {
+          type: 'Light',
+          light: true,
+          italic: false,
+          bold: false
+        },
+        {
+          type: 'Light Italic',
+          light: true,
+          italic: true,
+          bold: false
+        },
+        {
+          type: 'Regular',
+          light: false,
+          italic: false,
+          bold: false
+        },
+        {
+          type: 'Regular Italic',
+          light: false,
+          italic: true,
+          bold: false
+        },
+        {
+          type: 'Bold',
+          light: false,
+          italic: false,
+          bold: true
+        },
+        {
+          type: 'Bold Italic',
+          light: false,
+          italic: true,
+          bold: true
+        },
+        {
+          type: 'Heavy',
+          light: false,
+          italic: false,
+          bold: true
+        },
+        {
+          type: 'Heavy Italic',
+          light: false,
+          italic: true,
+          bold: true
+        }
+
+      ]
     }
   }
 }
 </script>
 
-<style>
+<style lang="scss">
+.weights-enter-active, .weights-leave-active {
+  transition: opacity 3s, visibility 4s;
+
+
+  .font-info__name,
+  .font-info__styles,
+  .font-weights li {
+    transition: transform 1s cubic-bezier(0.165, 0.840, 0.440, 1.000),
+                opacity 1s cubic-bezier(0.165, 0.840, 0.440, 1.000);
+  }
+
+  .font-info__styles {
+    transition-delay: 0.2s
+  }
+
+  @for $i from 1 through 20 {
+      .font-weights li:nth-child(#{$i}){
+         transition-delay: (#{0.3 + $i * .075}s);
+      }
+  }
+}
+.weights-enter, .weights-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0;
+
+  .font-info__name,
+  .font-info__styles,
+  .font-weights li {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+}
+
 .font-info {
 }
 

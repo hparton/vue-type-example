@@ -1,17 +1,15 @@
 <template>
-  <div class="wrap">
-    <div class="selected-fonts">
+  <transition name="selected">
+    <div class="selected-fonts-wrap" v-show="active">
+      <div class="selected-fonts"></div>
     </div>
-    <a href="#" class="cta">
-      See it in action
-      <img class="arrow" src="../assets/arrow-right.svg" alt="">
-    </a>
-  </div>
+  </transition>
 </template>
 
 <script>
 export default {
   name: 'selectedFonts',
+  props: ['active'],
   data () {
     return {
       msg: 'Selected Fonts'
@@ -20,7 +18,22 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+.selected-enter-active, .selected-leave-active {
+  transition: opacity .1s, visibility 1.5s;
+
+  .selected-fonts {
+    transition: width 1.5s cubic-bezier(0.165, 0.840, 0.440, 1.000);
+  }
+
+}
+.selected-enter, .selected-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0;
+
+  .selected-fonts {
+    width: 0%;
+  }
+}
 
 .cta {
   display: inline-block;
@@ -33,15 +46,14 @@ export default {
   margin-left: 15px;
 }
 
-.wrap {
-  width: 100%;
-  align-self: flex-start;
+.selected-fonts-wrap {
+  width: 62.5%;
   display: flex;
 }
+
 .selected-fonts {
   border-bottom: 1px solid #aaaeb7;
   align-self: center;
-
-  width: 70%;
+  width: 100%;
 }
 </style>
