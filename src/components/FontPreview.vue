@@ -1,12 +1,19 @@
 <template>
   <div class="font-preview">
-    <img src="../assets/test.png">
+    <overlay duration="2" color="#27313e">
+      <img src="../assets/test.png">
+    </overlay>
   </div>
 </template>
 
 <script>
+import Overlay from './Overlay'
+
 export default {
   name: 'fontPreview',
+  components: {
+    Overlay
+  },
   data () {
     return {
 
@@ -15,6 +22,16 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+  .font-preview {
+    height: 100%;
+    width: 75%;
+    display: table;
+  }
 
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }
 </style>

@@ -1,25 +1,20 @@
 <template>
   <div id="app">
     <div class="top">
-      <return></return>
+      <return v-show="show"></return>
     </div>
-    <div class="mid">
-      <overlay duration="2" color="#27313e">
-        <font-preview></font-preview>
-      </overlay>
-
-      <weight-list></weight-list>
+    <div class="middle">
+      <font-preview></font-preview>
+      <weight-list v-show="show"></weight-list>
     </div>
-
-    <div class="bot">
-      <themes></themes>
-      <selected></selected>
+    <div class="bottom">
+      <themes v-show="show"></themes>
+      <selected v-show="show"></selected>
     </div>
   </div>
 </template>
 
 <script>
-import Overlay from './components/Overlay'
 import Return from './components/Return'
 import Selected from './components/Selected'
 import WeightList from './components/WeightList'
@@ -29,7 +24,6 @@ import FontPreview from './components/FontPreview'
 export default {
   name: 'app',
   components: {
-    Overlay,
     Return,
     Selected,
     WeightList,
@@ -45,16 +39,44 @@ export default {
 </script>
 
 <style>
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-family: 'Karla', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  margin-top: 60px;
   position: relative;
+  width: 1400px;
+  height: 850px;
+  padding: 1% 3%;
+  background: #27313e;
+  color: #e5e5ea;
+  border-radius: 5px;
+  overflow:  hidden;
+  display: flex;
+  flex-direction: column;
 }
 
-img {
-  max-width: 100%;
+.top {
+  flex-grow: 1;
+}
+
+.middle,
+.bottom {
+  display: flex;
+  flex-grow: 1;
+
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="overlay">
+  <div class="overlay-wrapper">
     <canvas class="overlay" ref="overlay"></canvas>
     <slot></slot>
   </div>
@@ -25,13 +25,26 @@ export default {
       return this.duration * 60
     }
   },
-  created () {
-    this.$nextTick(() => {
-      this.canvas = this.$refs.overlay
-      this.ctx = this.canvas.getContext('2d')
-      this.start = this.canvas.width * 2
-      this.run()
-    })
+  mounted () {
+    /*
+      *==============================================================*
+      |=================== TODO: FIX ME PROPERLY  ===================|
+      *==============================================================*
+      |                                                              |
+      |   Need to make sure that height is computed before running   |
+      |     right now just waiting 200ms so i can get on with        |
+      |                     layout/styling                           |
+      |                                                              |
+      *==============================================================*
+     */
+    setTimeout(() => {
+      this.$nextTick(() => {
+        this.canvas = this.$refs.overlay
+        this.ctx = this.canvas.getContext('2d')
+        this.start = this.canvas.width * 2
+        this.run()
+      })
+    }, 200)
   },
   methods: {
     sizeCanvas () {
@@ -106,9 +119,13 @@ function easeOutCubic (currentIteration, startValue, changeInValue, totalIterati
 </script>
 
 <style>
+.overlay-wrapper {
+  position: relative;
+  height: inherit;
+}
+
 .overlay {
-  /* background: red; */
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
