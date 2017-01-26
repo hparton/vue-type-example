@@ -5,11 +5,12 @@
         <span class="font-info__name">Karla</span>
         <span class="font-info__styles">8 Styles</span>
         <ul class="font-weights">
-          <li v-for="weight in this.weights" v-bind:class="{
+          <li v-for="weight in this.weights" @click="toggleSelectedWeight(weight)" v-bind:class="{
             i: weight.italic,
             l: weight.light,
             b: weight.bold,
-            r: (!weight.italic && !weight.bold)
+            r: (!weight.italic && !weight.bold),
+            selected: weight.selected
           }">{{ weight.type }}</li>
         </ul>
       </div>
@@ -25,58 +26,42 @@ export default {
   props: ['active'],
   data () {
     return {
-      store: store.state,
-      weights: [
-        {
-          type: 'Light',
-          light: true,
-          italic: false,
-          bold: false
-        },
-        {
-          type: 'Light Italic',
-          light: true,
-          italic: true,
-          bold: false
-        },
-        {
-          type: 'Regular',
-          light: false,
-          italic: false,
-          bold: false
-        },
-        {
-          type: 'Regular Italic',
-          light: false,
-          italic: true,
-          bold: false
-        },
-        {
-          type: 'Bold',
-          light: false,
-          italic: false,
-          bold: true
-        },
-        {
-          type: 'Bold Italic',
-          light: false,
-          italic: true,
-          bold: true
-        },
-        {
-          type: 'Heavy',
-          light: false,
-          italic: false,
-          bold: true
-        },
-        {
-          type: 'Heavy Italic',
-          light: false,
-          italic: true,
-          bold: true
+      store: store.state
+    }
+  },
+  computed: {
+    weights () {
+      let weights = []
+
+      for (var i = 0; i < this.store.availableWeights.length; i++) {
+        let weight = this.store.availableWeights[i]
+        weight.selected = false
+
+        for (var j = 0; j < this.store.selectedWeights.length; j++) {
+          if (this.store.availableWeights[i].type === this.store.selectedWeights[j].type) {
+            weight.selected = true
+          }
         }
 
-      ]
+        weights.push(weight)
+      }
+
+      return weights
+    }
+  },
+  methods: {
+    toggleSelectedWeight (weight) {
+      if (!weight.selected) {
+        this.addSelectedWeight(weight)
+      } else {
+        this.removeSelectedWeight(weight)
+      }
+    },
+    addSelectedWeight (weight) {
+      store.addSelectedWeight(weight)
+    },
+    removeSelectedWeight (weight) {
+      store.removeSelectedWeight(weight)
     }
   }
 }
@@ -84,7 +69,7 @@ export default {
 
 <style lang="scss">
 .weights-enter-active, .weights-leave-active {
-  transition: opacity 3s, visibility 4s;
+  transition: opacity 1s, visibility 1s;
 
 
   .font-info__name,
@@ -116,9 +101,6 @@ export default {
   }
 }
 
-.font-info {
-}
-
 .font-info__name,
 .font-info__styles {
   display: block;
@@ -146,6 +128,14 @@ export default {
 
 .font-weights li {
   margin-bottom: 10px;
+  cursor: pointer;
+  transition: color .3s cubic-bezier(0.165, 0.840, 0.440, 1.000),
+              transform .3s cubic-bezier(0.165, 0.840, 0.440, 1.000);
+}
+
+.selected {
+  color: #ed4949;
+  transform: translateX(-15px);
 }
 
 .l {

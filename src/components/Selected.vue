@@ -1,18 +1,30 @@
 <template>
   <transition name="selected">
     <div class="selected-fonts-wrap" v-show="active">
-      <div class="selected-fonts"></div>
+      <div class="selected-fonts">
+        <span v-for="weight in store.selectedWeights">
+          {{ weight.type }}
+          <img @click="removeWeight(weight)" class="remove-button" src="../assets/cross.svg" alt="">
+        </span>
+      </div>
     </div>
   </transition>
 </template>
 
 <script>
+import store from '../store'
+
 export default {
   name: 'selectedFonts',
   props: ['active'],
   data () {
     return {
-      msg: 'Selected Fonts'
+      store: store.state
+    }
+  },
+  methods: {
+    removeWeight (weight) {
+      store.removeSelectedWeight(weight)
     }
   }
 }
@@ -35,6 +47,19 @@ export default {
   }
 }
 
+.selected-fonts {
+  span + span {
+    margin-left: 15px;
+  }
+}
+
+.remove-button {
+  width: 10px;
+  display: inline-block;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
 .cta {
   display: inline-block;
   color: #ed4949;
@@ -53,7 +78,10 @@ export default {
 
 .selected-fonts {
   border-bottom: 1px solid #aaaeb7;
+  padding-bottom: 5px;
   align-self: center;
   width: 100%;
+  min-height: 24px; // Temp style to fix jitter when no fonts selected.
+  text-align: left;
 }
 </style>
