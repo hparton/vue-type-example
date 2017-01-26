@@ -1,6 +1,6 @@
 <template>
   <transition name="weights">
-    <div class="weight-list" v-show="active">
+    <div class="weight-list" v-bind:class="'theme-' + store.theme" v-show="active">
       <div class="font-info">
         <span class="font-info__name">Karla</span>
         <span class="font-info__styles">8 Styles</span>
@@ -18,11 +18,14 @@
 </template>
 
 <script>
+import store from '../store'
+
 export default {
   name: 'weightList',
   props: ['active'],
   data () {
     return {
+      store: store.state,
       weights: [
         {
           type: 'Light',
@@ -89,6 +92,7 @@ export default {
   .font-weights li {
     transition: transform 1s cubic-bezier(0.165, 0.840, 0.440, 1.000),
                 opacity 1s cubic-bezier(0.165, 0.840, 0.440, 1.000);
+    backface-visibility: hidden;
   }
 
   .font-info__styles {
@@ -138,30 +142,6 @@ export default {
   list-style: none;
   font-size: 1.5em;
   position: relative;
-}
-
-.font-weights:before,
-.font-weights:after {
-  content: '';
-  display: block;
-  background: red;
-  width: 100%;
-  height: 4em;
-  position: absolute;
-  left: 0;
-  right: 0;
-}
-
-.font-weights:before {
-  top: 0;
-  background: linear-gradient(to bottom, rgba(39,49,62,0.85) 32.5%,rgba(0,0,0,0) 100%);
-  pointer-events: none;
-}
-
-.font-weights:after {
-  bottom: 0;
-  background: linear-gradient(to top, rgba(39,49,62,0.85) 32.5%,rgba(0,0,0,0) 100%);
-  pointer-events: none;
 }
 
 .font-weights li {

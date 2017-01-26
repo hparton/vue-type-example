@@ -1,6 +1,6 @@
 <template>
   <transition name="return">
-    <div class="return" v-show="active">
+    <div class="return" v-bind:class="'theme-' + store.theme" v-show="active">
       <img class="return-message__arrow arrow" src="../assets/arrow-left.svg" alt="">
       <div class="return-message">
         <span class="return-message__title">Google Fonts</span>
@@ -11,12 +11,14 @@
 </template>
 
 <script>
+import store from '../store'
+
 export default {
   name: 'return',
   props: ['active'],
   data () {
     return {
-      msg: 'Return'
+      store: store.state
     }
   }
 }
@@ -59,7 +61,15 @@ export default {
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  transition: color .5s cubic-bezier(0.785, 0.135, 0.150, 0.860);
+}
+
+.return.theme-dark {
   color: #aaaeb7;
+}
+
+.return.theme-light {
+  color: #27313e;
 }
 
 .arrow {

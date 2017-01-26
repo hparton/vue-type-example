@@ -1,5 +1,5 @@
 <template>
-  <div id="app" @click="toggle">
+  <div id="app" @click="toggle" v-bind:class="'theme-' + store.theme">
     <div class="top">
         <return :active="showReturn"></return>
     </div>
@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import store from './store'
+
 import Return from './components/Return'
 import Selected from './components/Selected'
 import WeightList from './components/WeightList'
@@ -35,6 +37,7 @@ export default {
   },
   data () {
     return {
+      store: store.state,
       showReturn: false,
       showFontPreview: false,
       showWeightList: false,
@@ -93,12 +96,29 @@ body {
   width: 1400px;
   height: 850px;
   padding: 1% 3%;
-  background: #27313e;
-  color: #e5e5ea;
   border-radius: 5px;
   overflow:  hidden;
   display: flex;
   flex-direction: column;
+  transition: color .5s cubic-bezier(0.785, 0.135, 0.150, 0.860),
+              background .7s .3s cubic-bezier(0.785, 0.135, 0.150, 0.860);
+}
+
+#app.theme-dark {
+  background: #27313e;
+  color: #e5e5ea;
+}
+
+#app.theme-light {
+  background: #e8e9df;
+  color: #27313e;
+}
+
+.top,
+.bottom,
+.middle {
+  position: relative;
+  z-index: 1;
 }
 
 .top {

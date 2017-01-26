@@ -1,7 +1,7 @@
 <template>
   <div class="font-preview">
-    <overlay duration="2" color="#27313e">
-      <img src="../assets/test.png">
+    <overlay duration="2">
+      <img src="../assets/test-new.png">
     </overlay>
   </div>
 </template>

@@ -6,18 +6,22 @@
 </template>
 
 <script>
+import store from '../store'
+
 export default {
   name: 'overlay',
-  props: ['duration', 'color'],
+  props: ['duration'],
   data () {
     return {
       open: true,
       canvas: null,
+      color: null,
       ctx: null,
       start: null,
       end: 0,
       iteration: 0,
-      points: []
+      points: [],
+      store: store.state
     }
   },
   computed: {
@@ -26,6 +30,9 @@ export default {
     }
   },
   mounted () {
+    store.getTheme(this.store.theme).then((response) => {
+      this.color = response.background
+    })
     /*
       *==============================================================*
       |=================== TODO: FIX ME PROPERLY  ===================|
