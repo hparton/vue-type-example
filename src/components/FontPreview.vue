@@ -9,9 +9,9 @@
           tag="ul"
           ref="text"
           v-bind:style="{height: height + 'px'}"
-          class="test-text-list"
+          class="text-overlay-list"
         >
-          <li class="test-text"
+          <li class="text-overlay"
               v-for="(weight, index) in store.selectedWeights"
               v-bind:key="weight.type"
               v-bind:class="{
@@ -81,13 +81,13 @@ export default {
     opacity: 0.75;
   }
 
-  .test-text-list {
+  .text-overlay-list {
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  .test-text {
+  .text-overlay {
     font-family: Karla;
     font-size: 730px;
     line-height: 0;

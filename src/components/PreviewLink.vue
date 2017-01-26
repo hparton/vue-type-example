@@ -1,8 +1,8 @@
 <template>
   <transition name="fade-up">
-    <a href="#" class="cta" v-if="active">
+    <a href="#" class="preview-link" v-if="active">
       See it in action
-      <img class="arrow" src="../assets/arrow-right.svg" alt="">
+      <img class="preview-link__arrow arrow" src="../assets/arrow-right.svg" alt="">
     </a>
   </transition>
 </template>
@@ -28,4 +28,16 @@ export default {
   opacity: 0;
   transform: translateY(10px);
 }
+
+.preview-link {
+  display: inline-block;
+  color: #ed4949;
+  text-decoration: none;
+  margin-left: 25px;
+}
+
+.preview-link__arrow {
+  margin-left: 15px;
+}
+
 </style>

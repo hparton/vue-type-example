@@ -4,7 +4,7 @@
         <return :active="showReturn"></return>
     </div>
     <div class="middle">
-      <font-preview></font-preview>
+      <font-preview v-cloak></font-preview>
       <weight-list :active="showWeightList"></weight-list>
     </div>
     <div class="bottom">
@@ -86,6 +86,8 @@ body {
   align-items: center;
 }
 
+[v-cloak] { display: none }
+
 #app {
   font-size: 16px;
   font-family: 'Karla', sans-serif;
@@ -107,6 +109,11 @@ body {
 #app.theme-dark {
   background: #27313e;
   color: #e5e5ea;
+}
+
+#app.theme-white {
+  background: #ffffff;
+  color: #27313e;
 }
 
 #app.theme-light {
