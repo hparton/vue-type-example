@@ -1,10 +1,11 @@
 <template>
   <div id="app" @click="toggle" v-bind:class="'theme-' + store.theme">
+    <info-pane :active="showInfoPane"></info-pane>
     <div class="top">
         <return :active="showReturn"></return>
     </div>
     <div class="middle">
-      <font-preview v-cloak></font-preview>
+      <font-preview :active="showFontPreview"></font-preview>
       <weight-list :active="showWeightList"></weight-list>
     </div>
     <div class="bottom">
@@ -24,6 +25,7 @@ import WeightList from './components/WeightList'
 import Themes from './components/Themes'
 import FontPreview from './components/FontPreview'
 import PreviewLink from './components/PreviewLink'
+import InfoPane from './components/InfoPane'
 
 export default {
   name: 'app',
@@ -33,7 +35,8 @@ export default {
     WeightList,
     Themes,
     FontPreview,
-    PreviewLink
+    PreviewLink,
+    InfoPane
   },
   data () {
     return {
@@ -43,10 +46,13 @@ export default {
       showWeightList: false,
       showThemes: false,
       showSelected: false,
-      showPreviewLink: false
+      showPreviewLink: false,
+      showInfoPane: false
     }
   },
   mounted () {
+    this.showFontPreview = !this.showFontPreview
+
     setTimeout(() => {
       this.showThemes = !this.showThemes
       this.showReturn = !this.showReturn
@@ -58,8 +64,8 @@ export default {
         setTimeout(() => {
           this.showPreviewLink = !this.showPreviewLink
         }, 1150)
-      }, 300)
-    }, 800)
+      }, 320)
+    }, 1550)
   },
   methods: {
     toggle () {
@@ -69,40 +75,44 @@ export default {
       // this.showWeightList = !this.showWeightList
       // this.showSelected = !this.showSelected
       // this.showPreviewLink = !this.showPreviewLink
+      // this.showInfoPane = !this.showInfoPane
     }
   }
 }
 </script>
 
 <style>
+
+html {
+  background: #1b232a;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+}
+
 *, *:before, *:after {
   box-sizing: border-box;
 }
 
-body {
-  display: flex;
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
+[v-cloak] {
+  display: none
 }
 
-[v-cloak] { display: none }
-
 #app {
-  font-size: 16px;
-  font-family: 'Karla', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  position: relative;
-  width: 1400px;
-  height: 850px;
-  padding: 1% 3%;
-  border-radius: 5px;
-  overflow:  hidden;
   display: flex;
   flex-direction: column;
-  transition: color .5s cubic-bezier(0.785, 0.135, 0.150, 0.860),
+  height: 850px;
+  width: 1400px;
+  padding: 20px 60px;
+  border-radius: 5px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform:  translate(-50%, -50%);
+  overflow:  hidden;
+  font-size: 16px;
+  font-family: 'Karla', sans-serif;
+  transition: color .3s cubic-bezier(0.165, 0.840, 0.440, 1.000),
               background .7s .3s cubic-bezier(0.785, 0.135, 0.150, 0.860);
 }
 
@@ -133,10 +143,15 @@ body {
   flex-grow: 1;
 }
 
+
 .middle,
 .bottom {
   display: flex;
   flex-grow: 1;
+}
+
+.middle {
+  min-height: 620px;
 }
 
 .bottom {

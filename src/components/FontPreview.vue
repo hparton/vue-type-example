@@ -1,32 +1,32 @@
 <template>
   <div class="font-preview" ref="wrapper">
-    <overlay duration="2">
-      <transition name="fade" mode="out-in">
-        <transition-group
-          v-if="store.selectedWeights.length"
-          key="example"
-          name="fade"
-          tag="ul"
-          ref="text"
-          v-bind:style="{height: height + 'px'}"
-          class="text-overlay-list"
-        >
-          <li class="text-overlay"
-              v-for="(weight, index) in store.selectedWeights"
-              v-bind:key="weight.type"
-              v-bind:class="{
-                i: weight.italic,
-                l: weight.light,
-                b: weight.bold,
-                r: (!weight.italic && !weight.bold),
-              }"
+      <overlay duration="2" :visible="active">
+        <transition name="fade" mode="out-in">
+          <transition-group
+            v-if="store.selectedWeights.length"
+            key="example"
+            name="fade"
+            tag="ul"
+            ref="text"
+            class="text-overlay-list"
           >
-            <span v-bind:class="{faint: index > 0}">Aa</span>
-          </li>
-          </transition-group>
-        <img src="../assets/test-new.png" v-else key="preview">
-      </transition>
-    </overlay>
+            <li class="text-overlay"
+                v-for="(weight, index) in store.selectedWeights"
+                v-bind:key="weight.type"
+                v-bind:class="{
+                  i: weight.italic,
+                  l: weight.light,
+                  b: weight.bold,
+                  r: (!weight.light && !weight.bold),
+                }"
+            >
+              <span class="text-overlay__chars" v-bind:class="{faint: index > 0}">Aa</span>
+            </li>
+            </transition-group>
+          <img src="../assets/test-new.png" class="font-placeholder" v-else key="preview">
+        </transition>
+      </overlay>
+    </transition>
   </div>
 </template>
 
@@ -37,32 +37,14 @@ import Overlay from './Overlay'
 
 export default {
   name: 'fontPreview',
+  props: ['active'],
   components: {
     Overlay
   },
   data () {
     return {
-      height: null,
       store: store.state
     }
-  },
-  created () {
-    /*
-      *==============================================================*
-      |=================== TODO: FIX ME PROPERLY  ===================|
-      *==============================================================*
-      |                                                              |
-      |   Need to make sure that height is computed before running   |
-      |     right now just waiting 200ms so i can get on with        |
-      |                     layout/styling                           |
-      |                                                              |
-      *==============================================================*
-     */
-    setTimeout(() => {
-      this.$nextTick(() => {
-        this.height = this.$refs.wrapper.clientHeight
-      })
-    }, 200)
   }
 }
 </script>
@@ -77,6 +59,10 @@ export default {
     transform: scale(1.1);
   }
 
+  .font-placeholder {
+    margin: 0 auto;
+  }
+
   .faint {
     opacity: 0.75;
   }
@@ -88,16 +74,18 @@ export default {
   }
 
   .text-overlay {
-    font-family: Karla;
     font-size: 730px;
-    line-height: 0;
-    top: 45%;
     width: 100%;
     position: absolute;
   }
 
+  .text-overlay__chars {
+    margin-top: -0.2em;
+    display: block;
+  }
+
   .font-preview {
-    height: 100%;
+    height: 620px;
     width: 75%;
     display: table;
   }

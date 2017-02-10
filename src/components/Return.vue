@@ -41,7 +41,7 @@ export default {
   }
 
 }
-.return-enter, .return-leave-to /* .fade-leave-active in <2.1.8 */ {
+.return-enter, .return-leave-to {
   opacity: 0;
 
   .return-message__arrow {
@@ -61,7 +61,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  transition: color .5s cubic-bezier(0.785, 0.135, 0.150, 0.860);
+  transition: color .3s .35s cubic-bezier(0.165, 0.840, 0.440, 1.000);
 }
 
 .return.theme-dark {

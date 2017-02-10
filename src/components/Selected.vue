@@ -39,7 +39,7 @@ export default {
   }
 }
 
-.selected-enter, .selected-leave-to /* .fade-leave-active in <2.1.8 */ {
+.selected-enter, .selected-leave-to {
   opacity: 0;
 
   .selected-fonts {
@@ -96,7 +96,8 @@ export default {
   list-style: none;
   align-self: center;
   width: 100%;
-  min-height: 24px; // Temp style to fix jitter when no fonts selected.
+  height: 26px;
+  margin-top: -26px;
   text-align: left;
 }
 </style>

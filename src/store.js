@@ -19,6 +19,7 @@ var store = {
         color: '#27313e'
       }
     ],
+    currentFont: 'Karla',
     availableWeights: [
       {
         type: 'Light',

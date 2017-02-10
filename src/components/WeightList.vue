@@ -2,10 +2,10 @@
   <transition name="weights">
     <div class="weight-list" v-bind:class="'theme-' + store.theme" v-show="active">
       <div class="font-info">
-        <span class="font-info__name">Karla</span>
-        <span class="font-info__styles">8 Styles</span>
+        <span class="font-info__name">{{ store.currentFont }}</span>
+        <span class="font-info__styles">{{ weights.length }} Styles</span>
         <ul class="font-weights">
-          <li v-for="weight in this.weights" @click="toggleSelectedWeight(weight)" v-bind:class="{
+          <li class="font-weights__weight" v-for="weight in weights" @click="toggleSelectedWeight(weight)" v-bind:class="{
             i: weight.italic,
             l: weight.light,
             b: weight.bold,
@@ -77,7 +77,6 @@ export default {
   .font-weights li {
     transition: transform 1s cubic-bezier(0.165, 0.840, 0.440, 1.000),
                 opacity 1s cubic-bezier(0.165, 0.840, 0.440, 1.000);
-    backface-visibility: hidden;
   }
 
   .font-info__styles {
@@ -90,6 +89,7 @@ export default {
       }
   }
 }
+
 .weights-enter, .weights-leave-to /* .fade-leave-active in <2.1.8 */ {
   opacity: 0;
 
@@ -104,6 +104,7 @@ export default {
 .font-info__name,
 .font-info__styles {
   display: block;
+  transition: color .2s cubic-bezier(0.165, 0.840, 0.440, 1.000);
 }
 
 .font-info__name {
@@ -119,14 +120,15 @@ export default {
 }
 
 .font-weights {
-  margin-top: 75%;
+  margin-top: 65%;
   padding-left: 0;
   list-style: none;
   font-size: 1.5em;
   position: relative;
 }
 
-.font-weights li {
+
+.font-weights__weight {
   margin-bottom: 10px;
   cursor: pointer;
   transition: color .3s cubic-bezier(0.165, 0.840, 0.440, 1.000),

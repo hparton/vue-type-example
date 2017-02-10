@@ -81,8 +81,7 @@ export default {
   transition: height .5s cubic-bezier(0.785, 0.135, 0.150, 0.860),
               width .5s cubic-bezier(0.785, 0.135, 0.150, 0.860),
               left .5s cubic-bezier(0.785, 0.135, 0.150, 0.860),
-              top .5s cubic-bezier(0.785, 0.135, 0.150, 0.860),
-              opacity .5s ease;
+              top .5s cubic-bezier(0.785, 0.135, 0.150, 0.860);
 }
 
 .new-color-animation.expanded {
@@ -92,8 +91,6 @@ export default {
   width: 100%;
   height: 100%;
 }
-
-
 
 .themes-enter-active, .themes-leave-active {
   transition: opacity .7s cubic-bezier(0.165, 0.840, 0.440, 1.000);
@@ -112,7 +109,7 @@ export default {
   }
 }
 
-.themes-enter, .themes-leave-to /* .fade-leave-active in <2.1.8 */ {
+.themes-enter, .themes-leave-to {
   opacity: 0;
 
   .themes__theme {
